@@ -1,0 +1,51 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: knowflow-postgres
+    environment:
+      POSTGRES_DB: knowflow
+      POSTGRES_USER: knowflow
+      POSTGRES_PASSWORD: knowflow_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U knowflow -d knowflow"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: knowflow-backend
+    environment:
+      SPRING_PROFILES_ACTIVE: local
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/knowflow
+      SPRING_DATASOURCE_USERNAME: knowflow
+      SPRING_DATASOURCE_PASSWORD: knowflow_password
+      KNOWFLOW_JWT_SECRET: ${KNOWFLOW_JWT_SECRET:-404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+      KNOWFLOW_STORAGE_DIR: /app/storage
+    ports:
+      - "8080:8080"
+    volumes:
+      - filestorage:/app/storage
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: knowflow-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
+  filestorage:

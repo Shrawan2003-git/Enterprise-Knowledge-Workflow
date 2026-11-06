@@ -1,0 +1,122 @@
+server:
+  port: 8080
+  shutdown: graceful
+
+spring:
+  application:
+    name: knowflow-backend
+  profiles:
+    active: local
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 55MB
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: false
+        jdbc:
+          time_zone: UTC
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: when-authorized
+      probes:
+        enabled: true
+      group:
+        readiness:
+          include: db,diskSpace
+        liveness:
+          include: livenessState
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+        knowflow.copilot.retrieval.duration: true
+        knowflow.copilot.generation.duration: true
+
+knowflow:
+  security:
+    jwt:
+      secret: ${KNOWFLOW_JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+      access-token-expiration-ms: 900000 # 15 minutes
+      refresh-token-expiration-ms: 604800000 # 7 days
+    cors:
+      allowed-origins: ${KNOWFLOW_CORS_ORIGINS:http://localhost:5173,http://localhost:3000}
+  ai:
+    enabled: false
+  storage:
+    type: local
+    local:
+      base-dir: ${KNOWFLOW_STORAGE_DIR:./storage}
+  ingestion:
+    enabled: ${KNOWFLOW_INGESTION_ENABLED:true}
+    concurrency: ${KNOWFLOW_INGESTION_CONCURRENCY:2}
+    lease-duration-seconds: ${KNOWFLOW_INGESTION_LEASE_SECONDS:60}
+    poll-interval-ms: ${KNOWFLOW_INGESTION_POLL_INTERVAL_MS:3000}
+    max-attempts: 3
+    base-backoff-ms: 1000
+    max-backoff-ms: 30000
+    chunk-token-budget: 500
+    chunk-overlap-tokens: 50
+    pipeline-version: v1
+    parser-timeout-seconds: 30
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/knowflow}
+    username: ${SPRING_DATASOURCE_USERNAME:knowflow}
+    password: ${SPRING_DATASOURCE_PASSWORD:knowflow}
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:mem:knowflow_test;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
+    username: sa
+    password: ""
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+  flyway:
+    enabled: false
+
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
+
+knowflow:
+  ingestion:
+    enabled: false
+  copilot:
+    rate-limit-per-hour: 1000

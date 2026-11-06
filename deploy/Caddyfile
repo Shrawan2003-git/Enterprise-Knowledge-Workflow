@@ -1,0 +1,47 @@
+{
+    # Global options
+    auto_https off
+}
+
+:80 {
+    encode gzip zstd
+
+    # Security Headers
+    header {
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        Permissions-Policy "camera=(), microphone=(), geolocation=()"
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    }
+
+    # API and Actuator routed to Backend
+    handle /api/* {
+        reverse_proxy backend:8080 {
+            header_up Host {host}
+            header_up X-Real-IP {remote_host}
+            header_up X-Forwarded-For {remote_host}
+            header_up X-Forwarded-Proto {scheme}
+        }
+    }
+
+    handle /actuator/* {
+        reverse_proxy backend:8080 {
+            header_up Host {host}
+            header_up X-Real-IP {remote_host}
+        }
+    }
+
+    handle /swagger-ui/* {
+        reverse_proxy backend:8080
+    }
+
+    handle /v3/api-docs/* {
+        reverse_proxy backend:8080
+    }
+
+    # Frontend Single Page App
+    handle {
+        reverse_proxy frontend:80
+    }
+}
