@@ -1,12 +1,20 @@
 server:
-  port: 8080
+  port: ${PORT:8080}
   shutdown: graceful
 
 spring:
   application:
     name: knowflow-backend
   profiles:
-    active: local
+    active: ${SPRING_PROFILES_ACTIVE:local}
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/knowflow}
+    username: ${SPRING_DATASOURCE_USERNAME:knowflow}
+    password: ${SPRING_DATASOURCE_PASSWORD:knowflow}
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    enabled: ${SPRING_FLYWAY_ENABLED:true}
+    baseline-on-migrate: true
   servlet:
     multipart:
       max-file-size: 50MB
@@ -20,6 +28,13 @@ spring:
         format_sql: false
         jdbc:
           time_zone: UTC
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui
 
 management:
   endpoints:
@@ -71,27 +86,6 @@ knowflow:
     chunk-overlap-tokens: 50
     pipeline-version: v1
     parser-timeout-seconds: 30
-
----
-spring:
-  config:
-    activate:
-      on-profile: local
-  datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/knowflow}
-    username: ${SPRING_DATASOURCE_USERNAME:knowflow}
-    password: ${SPRING_DATASOURCE_PASSWORD:knowflow}
-    driver-class-name: org.postgresql.Driver
-  flyway:
-    enabled: true
-    baseline-on-migrate: true
-
-springdoc:
-  api-docs:
-    enabled: true
-  swagger-ui:
-    enabled: true
-    path: /swagger-ui
 
 ---
 spring:

@@ -14,10 +14,13 @@ RUN ./mvnw clean package -DskipTests -B
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 
-RUN addgroup -S knowflow && adduser -S knowflow -G knowflow
+RUN addgroup -S knowflow && adduser -S knowflow -G knowflow \
+    && mkdir -p /app/storage \
+    && chown -R knowflow:knowflow /app
+
 USER knowflow:knowflow
 
-COPY --from=builder /workspace/target/*.jar app.jar
+COPY --chown=knowflow:knowflow --from=builder /workspace/target/*.jar app.jar
 
 EXPOSE 8080
 
