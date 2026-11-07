@@ -4,7 +4,7 @@ WORKDIR /workspace
 # Cache wrapper and dependencies
 COPY .mvn/ .mvn/
 COPY mvnw pom.xml ./
-RUN ./mvnw dependency:go-offline -B
+RUN chmod +x ./mvnw && ./mvnw dependency:go-offline -B
 
 # Compile and package application
 COPY src/ src/
