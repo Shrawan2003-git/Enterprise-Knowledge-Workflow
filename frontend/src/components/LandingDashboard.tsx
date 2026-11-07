@@ -76,8 +76,8 @@ export const LandingDashboard: React.FC = () => {
               <ShieldCheck className="h-5 w-5" />
             </div>
             <div>
-              <h1 className="text-lg font-bold tracking-tight text-white leading-tight">KnowFlow</h1>
-              <p className="text-xs text-slate-400">Enterprise AI Knowledge & Workflow</p>
+              <h1 className="text-lg font-bold tracking-tight text-white leading-tight">Enterprise KnowFlow</h1>
+              <p className="text-xs text-slate-400">AI Knowledge & Workflow Copilot</p>
             </div>
           </div>
 

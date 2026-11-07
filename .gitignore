@@ -45,6 +45,7 @@ logs/
 *.swo
 
 # OS files
+*.tsbuildinfo
 .DS_Store
 Thumbs.db
 Desktop.ini
