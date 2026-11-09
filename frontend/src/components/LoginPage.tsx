@@ -37,6 +37,9 @@ export const LoginPage: React.FC = () => {
 
       if (!res.ok) {
         const errData = await res.json().catch(() => ({}));
+        if (res.status >= 500) {
+          throw new Error('Cannot connect to backend server (http://localhost:8080). Please ensure your backend is running in Terminal 1.');
+        }
         throw new Error(errData.message || 'Authentication failed. Please check your credentials.');
       }
 
@@ -75,7 +78,10 @@ export const LoginPage: React.FC = () => {
 
       if (!res.ok) {
         const errData = await res.json().catch(() => ({}));
-        throw new Error(errData.message || 'Registration failed. Email may already be in use.');
+        if (res.status >= 500) {
+          throw new Error('Cannot connect to backend server (http://localhost:8080). Please ensure your backend is running in Terminal 1.');
+        }
+        throw new Error(errData.message || (res.status === 409 ? 'Email is already registered. Please sign in or use a different email.' : 'Registration failed. Please check your details.'));
       }
 
       const data = await res.json();
