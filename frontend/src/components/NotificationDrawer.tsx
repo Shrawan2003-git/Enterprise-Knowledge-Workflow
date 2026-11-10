@@ -61,12 +61,12 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-black/75 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="w-full max-w-md clay-card-elevated h-full flex flex-col shadow-2xl animate-in slide-in-from-right duration-300 rounded-l-3xl border-r-0">
+    <div className="fixed inset-0 z-50 flex justify-end bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
+      <div className="w-full max-w-md acrylic-console h-full flex flex-col shadow-2xl animate-in slide-in-from-right duration-300 rounded-l-3xl border-r-0">
         {/* Drawer Header */}
         <div className="p-5 border-b border-slate-700/40 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="h-9 w-9 rounded-xl clay-btn-teal flex items-center justify-center text-white font-bold">
+            <div className="h-9 w-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold shadow-md shadow-blue-500/50">
               <Bell className="h-4 w-4" />
             </div>
             <h3 className="font-black text-white text-base">Notifications</h3>
@@ -74,13 +74,13 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({
           <div className="flex items-center gap-2">
             <button
               onClick={handleMarkAllRead}
-              className="clay-btn-secondary text-xs text-teal-400 hover:text-white font-bold px-3 py-1.5 transition-all"
+              className="pill-badge text-xs text-blue-300 hover:text-white font-bold px-3 py-1.5 transition-all"
             >
               Mark all read
             </button>
             <button
               onClick={onClose}
-              className="clay-btn-secondary p-2 text-slate-400 hover:text-white transition-colors"
+              className="pill-badge p-2 text-slate-400 hover:text-white transition-colors"
             >
               <X className="h-4 w-4" />
             </button>
@@ -92,7 +92,7 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({
           {loading ? (
             <div className="space-y-3">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="h-20 rounded-2xl clay-card animate-pulse"></div>
+                <div key={i} className="h-20 rounded-2xl dark-card animate-pulse"></div>
               ))}
             </div>
           ) : notifications.length === 0 ? (
@@ -108,12 +108,12 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({
                   key={n.id}
                   className={`p-4 rounded-2xl transition-all ${
                     isUnread
-                      ? 'clay-card-elevated border border-teal-500/30'
-                      : 'clay-card text-slate-400'
+                      ? 'neon-radiant-card border border-blue-500/30'
+                      : 'dark-card text-slate-400'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-2">
-                    <span className="clay-badge-cyan px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider">
+                    <span className="pill-badge-active px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider">
                       {n.type}
                     </span>
                     <span className="flex items-center gap-1 text-[11px] text-slate-400 font-medium">
@@ -131,7 +131,7 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({
                     {n.linkUrl ? (
                       <a
                         href={n.linkUrl}
-                        className="inline-flex items-center gap-1 text-xs text-teal-400 hover:text-teal-300 font-bold"
+                        className="inline-flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300 font-bold"
                       >
                         <span>View</span>
                         <ExternalLink className="h-3 w-3" />
@@ -140,7 +140,7 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({
                     {isUnread && (
                       <button
                         onClick={() => handleMarkRead(n.id)}
-                        className="clay-btn-secondary inline-flex items-center gap-1 text-xs px-2.5 py-1 text-slate-300 hover:text-white transition-all font-bold"
+                        className="pill-badge inline-flex items-center gap-1 text-xs px-2.5 py-1 text-slate-300 hover:text-white transition-all font-bold"
                       >
                         <Check className="h-3.5 w-3.5" />
                         <span>Mark read</span>

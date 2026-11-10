@@ -107,14 +107,14 @@ export const TasksView: React.FC = () => {
   const getPriorityBadge = (priority: string) => {
     switch (priority) {
       case 'URGENT':
-        return 'clay-badge-rose';
+        return 'pill-badge text-rose-300 border-rose-500/40 bg-rose-950/40';
       case 'HIGH':
-        return 'clay-badge-amber';
+        return 'pill-badge text-amber-300 border-amber-500/40 bg-amber-950/40';
       case 'MEDIUM':
-        return 'clay-badge-cyan';
+        return 'pill-badge-active text-blue-200';
       case 'LOW':
       default:
-        return 'clay-badge-emerald';
+        return 'pill-badge text-emerald-300 border-emerald-500/40 bg-emerald-950/40';
     }
   };
 
@@ -136,7 +136,7 @@ export const TasksView: React.FC = () => {
         </div>
         <button
           onClick={() => setIsCreateOpen(true)}
-          className="clay-btn-teal inline-flex items-center gap-2 px-5 py-2.5 text-xs font-bold text-white transition-all"
+          className="btn-electric inline-flex items-center gap-2 px-5 py-2.5 text-xs font-bold text-white transition-all"
         >
           <Plus className="h-4 w-4" />
           Create Task
@@ -147,7 +147,7 @@ export const TasksView: React.FC = () => {
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="h-80 rounded-3xl clay-card animate-pulse"></div>
+            <div key={i} className="h-80 rounded-3xl dark-card animate-pulse"></div>
           ))}
         </div>
       ) : (
@@ -157,14 +157,14 @@ export const TasksView: React.FC = () => {
             return (
               <div
                 key={col.id}
-                className="clay-card rounded-3xl p-5 flex flex-col min-h-[520px]"
+                className="dark-card rounded-3xl p-5 flex flex-col min-h-[520px]"
               >
                 <div className="flex items-center justify-between pb-3 border-b border-slate-700/40 mb-4">
                   <h3 className="font-bold text-white text-sm flex items-center gap-2.5">
-                    <span className="w-2.5 h-2.5 rounded-full bg-teal-400 shadow-[0_0_8px_rgba(45,212,191,0.6)]" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-blue-400 shadow-[0_0_8px_#60a5fa]" />
                     {col.title}
                   </h3>
-                  <span className="text-xs font-mono px-2.5 py-0.5 rounded-full clay-badge-cyan font-bold">
+                  <span className="text-xs font-mono px-2.5 py-0.5 rounded-full pill-badge font-bold text-white">
                     {colTasks.length}
                   </span>
                 </div>
@@ -180,10 +180,11 @@ export const TasksView: React.FC = () => {
                         t.dueAt &&
                         new Date(t.dueAt).getTime() < Date.now() &&
                         t.status !== 'DONE';
+                      const isUrgentOrHigh = t.priority === 'URGENT' || t.priority === 'HIGH';
                       return (
                         <div
                           key={t.id}
-                          className="clay-card-elevated rounded-2xl p-4 transition-all duration-200 hover:-translate-y-1 space-y-3"
+                          className={`${isUrgentOrHigh ? 'neon-radiant-card' : 'dark-card'} rounded-2xl p-4 transition-all duration-200 hover:-translate-y-1 space-y-3`}
                         >
                           <div className="flex items-start justify-between gap-2">
                             <span
@@ -194,7 +195,7 @@ export const TasksView: React.FC = () => {
                               {t.priority}
                             </span>
                             {isOverdue && (
-                              <span className="clay-badge-rose inline-flex items-center gap-1 text-[10px] px-2 py-0.5 font-bold">
+                              <span className="pill-badge text-rose-300 border-rose-500/40 inline-flex items-center gap-1 text-[10px] px-2 py-0.5 font-bold">
                                 <AlertTriangle className="h-3 w-3" /> Overdue
                               </span>
                             )}
@@ -212,7 +213,7 @@ export const TasksView: React.FC = () => {
                           <div className="pt-2.5 border-t border-slate-700/40 flex items-center justify-between text-xs text-slate-400">
                             <button
                               onClick={() => setSelectedTaskForComment(t)}
-                              className="inline-flex items-center gap-1.5 text-slate-400 hover:text-teal-400 transition-colors font-medium text-xs"
+                              className="inline-flex items-center gap-1.5 text-slate-400 hover:text-blue-400 transition-colors font-medium text-xs"
                             >
                               <MessageSquare className="h-3.5 w-3.5" />
                               <span>{t.comments?.length || 0}</span>
@@ -223,7 +224,7 @@ export const TasksView: React.FC = () => {
                                 <button
                                   onClick={() => handleUpdateStatus(t, 'IN_PROGRESS')}
                                   title="Move to In Progress"
-                                  className="clay-btn-secondary p-1.5 rounded-xl text-teal-400 hover:text-white transition-all"
+                                  className="pill-badge p-1.5 rounded-xl text-blue-400 hover:text-white transition-all"
                                 >
                                   <ArrowRight className="h-3.5 w-3.5" />
                                 </button>
@@ -232,7 +233,7 @@ export const TasksView: React.FC = () => {
                                 <button
                                   onClick={() => handleUpdateStatus(t, 'DONE')}
                                   title="Mark Done"
-                                  className="clay-btn-teal p-1.5 rounded-xl text-white transition-all"
+                                  className="btn-electric p-1.5 rounded-xl text-white transition-all"
                                 >
                                   <CheckCircle2 className="h-3.5 w-3.5" />
                                 </button>

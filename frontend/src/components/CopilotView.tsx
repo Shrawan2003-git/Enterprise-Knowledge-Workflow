@@ -452,21 +452,21 @@ export const CopilotView: React.FC<CopilotViewProps> = ({
                     {!isUser && renderConfidenceBadge(m.confidence)}
                   </div>
 
-                  {/* Message Bubble (Clay) */}
+                  {/* Message Bubble (Cosmic Glass) */}
                   <div
                     className={`text-sm leading-relaxed ${
                       isUser
-                        ? 'clay-pill-active py-3.5 px-5 text-white max-w-[85%] rounded-3xl rounded-br-none shadow-lg font-medium'
-                        : 'clay-card-elevated p-5 text-slate-200 max-w-[95%] space-y-3 rounded-3xl rounded-bl-none border border-slate-700/30 shadow-xl'
+                        ? 'btn-electric py-3.5 px-5 text-white max-w-[85%] rounded-3xl rounded-br-none shadow-lg font-medium'
+                        : 'neon-radiant-card p-5 text-slate-200 max-w-[95%] space-y-3 rounded-3xl rounded-bl-none shadow-xl'
                     }`}
                   >
                     <div className="whitespace-pre-wrap">{m.content}</div>
 
                     {/* Citations List on Assistant message */}
                     {!isUser && m.citations && m.citations.length > 0 && (
-                      <div className="mt-4 pt-3 border-t border-slate-800/80 flex flex-col gap-2">
-                        <span className="text-[11px] font-bold text-slate-400 flex items-center gap-1.5 uppercase tracking-wider">
-                          <BookOpen className="h-3.5 w-3.5 text-teal-400" />
+                      <div className="mt-4 pt-3 border-t border-blue-400/20 flex flex-col gap-2">
+                        <span className="text-[11px] font-bold text-blue-300 flex items-center gap-1.5 uppercase tracking-wider">
+                          <BookOpen className="h-3.5 w-3.5 text-blue-400" />
                           Verified Grounding Sources:
                         </span>
                         <div className="flex flex-wrap gap-2">
@@ -474,18 +474,18 @@ export const CopilotView: React.FC<CopilotViewProps> = ({
                             <button
                               key={c.id}
                               onClick={() => handleCitationClick(c)}
-                              className="clay-badge-cyan group flex items-center gap-1.5 px-3 py-1 font-bold text-xs transition-transform hover:scale-105"
+                              className="pill-badge-active group flex items-center gap-1.5 px-3 py-1 font-bold text-xs transition-transform hover:scale-105"
                             >
-                              <span className="font-mono text-teal-400 text-[11px]">
+                              <span className="font-mono text-blue-300 text-[11px]">
                                 {c.sourceId}
                               </span>
                               <span className="truncate max-w-[180px]">
                                 {c.documentTitle}
                               </span>
-                              <span className="text-slate-400 text-[10px]">
+                              <span className="text-blue-200 text-[10px]">
                                 (v{c.versionNumber}, {c.pageHint})
                               </span>
-                              <ExternalLink className="h-3 w-3 text-teal-400" />
+                              <ExternalLink className="h-3 w-3 text-blue-300" />
                             </button>
                           ))}
                         </div>

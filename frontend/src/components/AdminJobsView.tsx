@@ -129,10 +129,10 @@ export const AdminJobsView: React.FC = () => {
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
       {/* Header and KPI summary */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 clay-card-elevated p-6 rounded-3xl">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 dark-card p-6 rounded-3xl">
         <div>
           <div className="flex items-center gap-2.5">
-            <Cpu className="w-6 h-6 text-teal-400" />
+            <Cpu className="w-6 h-6 text-blue-400" />
             <h2 className="text-xl font-black text-white">Ingestion Pipeline Engine</h2>
           </div>
           <p className="text-sm text-slate-400 mt-1">
@@ -142,7 +142,7 @@ export const AdminJobsView: React.FC = () => {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setShowReprocessModal(true)}
-            className="clay-btn-teal inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-white transition-all"
+            className="btn-electric inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-white transition-all"
           >
             <Layers className="w-4 h-4" />
             Reprocess Pipeline
@@ -150,9 +150,9 @@ export const AdminJobsView: React.FC = () => {
           <button
             onClick={loadJobs}
             disabled={loading}
-            className="clay-btn-secondary inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-slate-200 transition-all"
+            className="pill-badge inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-slate-200 transition-all hover:text-white"
           >
-            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin text-teal-400' : ''}`} />
+            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
             Refresh
           </button>
         </div>
@@ -160,19 +160,19 @@ export const AdminJobsView: React.FC = () => {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="p-5 rounded-3xl clay-card">
+        <div className="p-5 rounded-3xl dark-card">
           <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">Active Workers</div>
           <div className="text-2xl font-black text-white mt-1">{counts.running}</div>
         </div>
-        <div className="p-5 rounded-3xl clay-card">
+        <div className="p-5 rounded-3xl dark-card">
           <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">Queued Jobs</div>
           <div className="text-2xl font-black text-white mt-1">{counts.pending}</div>
         </div>
-        <div className="p-5 rounded-3xl clay-card">
+        <div className="p-5 rounded-3xl dark-card">
           <div className="text-xs font-bold text-emerald-400 uppercase tracking-wider">Indexed Ready</div>
           <div className="text-2xl font-black text-emerald-400 mt-1">{counts.succeeded}</div>
         </div>
-        <div className="p-5 rounded-3xl clay-card">
+        <div className="p-5 rounded-3xl dark-card">
           <div className="text-xs font-bold text-rose-400 uppercase tracking-wider">Dead Letter Failures</div>
           <div className="text-2xl font-black text-rose-400 mt-1">{counts.failed}</div>
         </div>

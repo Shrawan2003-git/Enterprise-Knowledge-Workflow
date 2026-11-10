@@ -61,17 +61,17 @@ export const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose, onSuc
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-md p-4 animate-in fade-in duration-200">
-      <div className="w-full max-w-xl clay-card-elevated rounded-3xl p-7 space-y-6">
-        <div className="flex items-center justify-between border-b border-slate-700/40 pb-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-in fade-in duration-200">
+      <div className="w-full max-w-xl neon-radiant-card rounded-3xl p-7 space-y-6">
+        <div className="flex items-center justify-between border-b border-blue-400/20 pb-4">
           <h3 className="text-xl font-black text-white">Upload Governed Document</h3>
-          <button onClick={onClose} className="clay-btn-secondary rounded-xl p-2 text-slate-400 hover:text-white transition-colors">
+          <button onClick={onClose} className="pill-badge rounded-xl p-2 text-slate-400 hover:text-white transition-colors">
             <X className="h-4 w-4" />
           </button>
         </div>
 
         {error && (
-          <div className="flex items-center gap-2 rounded-2xl clay-badge-rose p-3.5 text-xs font-bold">
+          <div className="flex items-center gap-2 rounded-2xl pill-badge text-rose-300 border-rose-500/40 p-3.5 text-xs font-bold">
             <AlertCircle className="h-4 w-4 flex-shrink-0" />
             <span>{error}</span>
           </div>
@@ -79,7 +79,7 @@ export const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose, onSuc
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Drag & Drop File Zone */}
-          <div className="relative rounded-2xl border-2 border-dashed border-teal-500/40 hover:border-teal-400 p-6 text-center transition-colors clay-card">
+          <div className="relative rounded-2xl border-2 border-dashed border-blue-500/40 hover:border-blue-400 p-6 text-center transition-colors dark-card">
             <input
               type="file"
               accept=".pdf"
@@ -87,7 +87,7 @@ export const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose, onSuc
               className="absolute inset-0 cursor-pointer opacity-0"
             />
             <div className="flex flex-col items-center justify-center space-y-2">
-              <UploadCloud className="h-10 w-10 text-teal-400" />
+              <UploadCloud className="h-10 w-10 text-blue-400" />
               <p className="text-sm font-bold text-white">
                 {file ? file.name : 'Click or drag PDF document to upload'}
               </p>
@@ -148,14 +148,14 @@ export const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose, onSuc
             <button
               type="button"
               onClick={onClose}
-              className="clay-btn-secondary px-4 py-2 text-xs font-bold text-slate-300 hover:text-white transition-all"
+              className="pill-badge px-4 py-2 text-xs font-bold text-slate-300 hover:text-white transition-all"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading || !file}
-              className="clay-btn-teal px-5 py-2 text-xs font-bold text-white disabled:opacity-50 transition-all"
+              className="btn-electric px-5 py-2 text-xs font-bold text-white disabled:opacity-50 transition-all"
             >
               {loading ? 'Uploading & Verifying...' : 'Publish Version'}
             </button>

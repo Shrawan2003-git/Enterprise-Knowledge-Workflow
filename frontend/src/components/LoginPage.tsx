@@ -104,32 +104,28 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center clay-surface px-4 py-12 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Ambient background clay glow */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
-      <div className="w-full max-w-lg space-y-6 rounded-3xl clay-card p-8 md:p-10 shadow-2xl relative z-10">
+    <div className="flex min-h-screen items-center justify-center bg-scenic-horizon px-4 py-12 sm:px-6 lg:px-8 relative overflow-hidden">
+      <div className="w-full max-w-lg space-y-6 neon-radiant-card p-8 md:p-10 shadow-2xl relative z-10">
         <div>
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl clay-btn-teal text-white shadow-lg">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-lg shadow-blue-500/50">
             <ShieldCheck className="h-9 w-9" />
           </div>
           <h2 className="mt-5 text-center text-3xl font-extrabold tracking-tight text-white">
             Enterprise KnowFlow
           </h2>
-          <p className="mt-1 text-center text-sm text-slate-400 font-medium">
+          <p className="mt-1 text-center text-sm text-blue-300 font-medium">
             AI Knowledge & Workflow Copilot
           </p>
         </div>
 
-        {/* Mode Switcher Tabs (Clay Segmented) */}
+        {/* Mode Switcher Tabs */}
         <div className="grid grid-cols-2 rounded-2xl bg-slate-950/70 p-1.5 border border-slate-800/80">
           <button
             type="button"
             onClick={() => { setMode('signin'); setError(null); }}
             className={`py-2.5 text-xs font-bold rounded-xl transition-all ${
               mode === 'signin'
-                ? 'clay-pill-active text-white shadow-md'
+                ? 'pill-badge-active text-white shadow-md'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
@@ -140,7 +136,7 @@ export const LoginPage: React.FC = () => {
             onClick={() => { setMode('register'); setError(null); }}
             className={`py-2.5 text-xs font-bold rounded-xl transition-all ${
               mode === 'register'
-                ? 'clay-pill-active text-white shadow-md'
+                ? 'pill-badge-active text-white shadow-md'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
@@ -202,7 +198,7 @@ export const LoginPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400 hover:text-teal-400 transition-colors"
+                  className="absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400 hover:text-blue-400 transition-colors"
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
                   {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
@@ -213,40 +209,40 @@ export const LoginPage: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="clay-btn-teal group relative flex w-full justify-center items-center gap-2 py-3.5 text-sm font-bold text-white shadow-lg disabled:opacity-50 mt-2"
+              className="btn-electric group relative flex w-full justify-center items-center gap-2 py-3.5 text-sm font-bold text-white shadow-lg disabled:opacity-50 mt-2"
             >
               {loading ? 'Authenticating...' : 'Sign In to Workspace'}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </button>
 
-            <div className="pt-4 border-t border-slate-800 text-center">
+            <div className="pt-4 border-t border-slate-700/60 text-center">
               <span className="text-xs text-slate-400">Quick sign in with pre-seeded role accounts:</span>
               <div className="mt-2.5 flex flex-wrap justify-center gap-2 text-xs">
                 <button
                   type="button"
                   onClick={() => setDemoAccount('admin@knowflow.local')}
-                  className="clay-badge-cyan px-3 py-1 font-bold cursor-pointer transition hover:scale-105"
+                  className="pill-badge px-3 py-1 font-bold cursor-pointer transition hover:scale-105 hover:text-white"
                 >
                   Admin
                 </button>
                 <button
                   type="button"
                   onClick={() => setDemoAccount('km@knowflow.local')}
-                  className="clay-badge-purple px-3 py-1 font-bold cursor-pointer transition hover:scale-105"
+                  className="pill-badge px-3 py-1 font-bold cursor-pointer transition hover:scale-105 hover:text-white"
                 >
                   Knowledge Mgr
                 </button>
                 <button
                   type="button"
                   onClick={() => setDemoAccount('approver@knowflow.local')}
-                  className="clay-badge-amber px-3 py-1 font-bold cursor-pointer transition hover:scale-105"
+                  className="pill-badge px-3 py-1 font-bold cursor-pointer transition hover:scale-105 hover:text-white"
                 >
                   Approver
                 </button>
                 <button
                   type="button"
                   onClick={() => setDemoAccount('employee@knowflow.local')}
-                  className="clay-badge-emerald px-3 py-1 font-bold cursor-pointer transition hover:scale-105"
+                  className="pill-badge px-3 py-1 font-bold cursor-pointer transition hover:scale-105 hover:text-white"
                 >
                   Employee
                 </button>
@@ -312,7 +308,7 @@ export const LoginPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowRegPassword(!showRegPassword)}
-                  className="absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400 hover:text-teal-400 transition-colors"
+                  className="absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400 hover:text-blue-400 transition-colors"
                   aria-label={showRegPassword ? 'Hide password' : 'Show password'}
                 >
                   {showRegPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
@@ -344,7 +340,7 @@ export const LoginPage: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="clay-btn-teal group relative flex w-full justify-center items-center gap-2 py-3.5 text-sm font-bold text-white shadow-lg disabled:opacity-50 mt-2"
+              className="btn-electric group relative flex w-full justify-center items-center gap-2 py-3.5 text-sm font-bold text-white shadow-lg disabled:opacity-50 mt-2"
             >
               {loading ? 'Registering Account...' : 'Create Role Account & Sign In'}
               <UserPlus className="h-4 w-4" />

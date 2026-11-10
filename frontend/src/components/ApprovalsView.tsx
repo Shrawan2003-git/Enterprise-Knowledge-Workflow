@@ -138,11 +138,11 @@ export const ApprovalsView: React.FC = () => {
           {approvals.map((req) => (
             <div
               key={req.id}
-              className="clay-card p-6 space-y-4 border border-slate-700/20"
+              className={`${req.status === 'PENDING' ? 'neon-radiant-card' : 'dark-card'} p-6 space-y-4`}
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <div className="h-11 w-11 rounded-2xl clay-btn-teal flex items-center justify-center text-white shadow-md font-bold">
+                  <div className="h-11 w-11 rounded-2xl bg-blue-600 flex items-center justify-center text-white shadow-md font-bold">
                     <UserCheck className="h-6 w-6" />
                   </div>
                   <div>
@@ -150,7 +150,7 @@ export const ApprovalsView: React.FC = () => {
                       <span className="text-xs font-mono text-slate-400">
                         Req ID: {req.id.substring(0, 8)}...
                       </span>
-                      <span className={`px-3 py-0.5 text-xs font-bold ${getStatusBadge(req.status)}`}>
+                      <span className={`px-2.5 py-0.5 text-[11px] font-bold ${getStatusBadge(req.status)}`}>
                         {req.status}
                       </span>
                     </div>
@@ -171,7 +171,7 @@ export const ApprovalsView: React.FC = () => {
                         setComment('');
                         setActionError(null);
                       }}
-                      className="clay-btn-teal px-4 py-2 text-xs font-bold text-white shadow-md flex items-center gap-1.5"
+                      className="btn-electric px-4 py-2 text-xs font-bold text-white shadow-md flex items-center gap-1.5"
                     >
                       <CheckCircle2 className="h-3.5 w-3.5" />
                       Approve
@@ -182,7 +182,7 @@ export const ApprovalsView: React.FC = () => {
                         setComment('');
                         setActionError(null);
                       }}
-                      className="clay-btn-secondary px-4 py-2 text-xs font-bold text-amber-300 hover:text-white flex items-center gap-1.5"
+                      className="pill-badge px-4 py-2 text-xs font-bold text-amber-300 hover:text-white flex items-center gap-1.5"
                     >
                       <AlertCircle className="h-3.5 w-3.5" />
                       Request Changes
@@ -193,7 +193,7 @@ export const ApprovalsView: React.FC = () => {
                         setComment('');
                         setActionError(null);
                       }}
-                      className="clay-btn-secondary px-4 py-2 text-xs font-bold text-rose-400 hover:text-white flex items-center gap-1.5"
+                      className="pill-badge px-4 py-2 text-xs font-bold text-rose-400 hover:text-white flex items-center gap-1.5"
                     >
                       <XCircle className="h-3.5 w-3.5" />
                       Reject

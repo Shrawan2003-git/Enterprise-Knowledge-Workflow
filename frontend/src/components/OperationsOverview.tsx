@@ -46,28 +46,28 @@ export const OperationsOverview: React.FC = () => {
         <button
           onClick={fetchOverview}
           disabled={loading}
-          className="clay-btn-secondary inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-slate-200 transition-all hover:scale-105"
+          className="btn-electric inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-white transition-all hover:scale-105"
         >
-          <RefreshCw className={`h-3.5 w-3.5 ${loading ? 'animate-spin text-teal-400' : ''}`} />
+          <RefreshCw className={`h-3.5 w-3.5 ${loading ? 'animate-spin' : ''}`} />
           <span>Refresh</span>
         </button>
       </div>
 
       {error ? (
-        <div className="rounded-2xl clay-badge-rose p-4 text-sm font-semibold">
+        <div className="rounded-2xl pill-badge text-rose-300 border-rose-500/40 p-4 text-sm font-semibold">
           {error}
         </div>
       ) : (
         <div className="space-y-6">
-          {/* Top KPI Cards (Clay) */}
+          {/* Top KPI Cards (Cosmic Glass) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {/* Governed Docs */}
-            <div className="clay-card rounded-3xl p-6 relative overflow-hidden group transition-all duration-200 hover:-translate-y-1">
+            {/* Governed Docs (Signature Neon Radiant Card) */}
+            <div className="neon-radiant-card rounded-3xl p-6 relative overflow-hidden group transition-all duration-200 hover:-translate-y-1">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">
                   Governed Docs
                 </span>
-                <div className="h-10 w-10 rounded-2xl clay-badge-cyan flex items-center justify-center font-bold">
+                <div className="h-10 w-10 rounded-2xl bg-blue-600 flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/50">
                   <FileText className="h-5 w-5" />
                 </div>
               </div>
@@ -75,21 +75,21 @@ export const OperationsOverview: React.FC = () => {
                 <span className="text-3xl font-black text-white">
                   {data?.documents.totalCount ?? 0}
                 </span>
-                <span className="text-xs text-slate-400 font-medium">records</span>
+                <span className="text-xs text-blue-300 font-medium">records</span>
               </div>
-              <div className="mt-3.5 flex items-center gap-1.5 text-[11px] text-teal-400 font-bold">
-                <ShieldCheck className="h-3.5 w-3.5" />
+              <div className="mt-3.5 flex items-center gap-1.5 text-[11px] text-blue-300 font-bold">
+                <ShieldCheck className="h-3.5 w-3.5 text-blue-400" />
                 <span>Central ACL Enforced</span>
               </div>
             </div>
 
             {/* Open Action Tasks */}
-            <div className="clay-card rounded-3xl p-6 relative overflow-hidden group transition-all duration-200 hover:-translate-y-1">
+            <div className="dark-card rounded-3xl p-6 relative overflow-hidden group transition-all duration-200 hover:-translate-y-1">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
                   Open Tasks
                 </span>
-                <div className="h-10 w-10 rounded-2xl clay-badge-cyan flex items-center justify-center font-bold">
+                <div className="h-10 w-10 rounded-2xl pill-badge-active flex items-center justify-center font-bold text-white">
                   <Clock className="h-5 w-5" />
                 </div>
               </div>
@@ -105,12 +105,12 @@ export const OperationsOverview: React.FC = () => {
             </div>
 
             {/* Overdue Items */}
-            <div className="clay-card rounded-3xl p-6 relative overflow-hidden group transition-all duration-200 hover:-translate-y-1">
+            <div className="dark-card rounded-3xl p-6 relative overflow-hidden group transition-all duration-200 hover:-translate-y-1">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
                   Overdue Tasks
                 </span>
-                <div className="h-10 w-10 rounded-2xl clay-badge-rose flex items-center justify-center font-bold">
+                <div className="h-10 w-10 rounded-2xl pill-badge text-rose-300 border-rose-500/40 flex items-center justify-center font-bold">
                   <AlertTriangle className="h-5 w-5" />
                 </div>
               </div>
@@ -126,12 +126,12 @@ export const OperationsOverview: React.FC = () => {
             </div>
 
             {/* Ingestion Engine Status */}
-            <div className="clay-card rounded-3xl p-6 relative overflow-hidden group transition-all duration-200 hover:-translate-y-1">
+            <div className="dark-card rounded-3xl p-6 relative overflow-hidden group transition-all duration-200 hover:-translate-y-1">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
                   Ingestion Engine
                 </span>
-                <div className="h-10 w-10 rounded-2xl clay-badge-emerald flex items-center justify-center font-bold">
+                <div className="h-10 w-10 rounded-2xl pill-badge text-emerald-300 border-emerald-500/40 flex items-center justify-center font-bold">
                   <Cpu className="h-5 w-5" />
                 </div>
               </div>
@@ -148,15 +148,15 @@ export const OperationsOverview: React.FC = () => {
           </div>
 
           {/* System Architecture Status Callout */}
-          <div className="clay-card-elevated rounded-3xl p-6 space-y-4">
-            <div className="flex items-center gap-2.5 text-teal-400 font-bold">
+          <div className="dark-card rounded-3xl p-6 space-y-4">
+            <div className="flex items-center gap-2.5 text-blue-400 font-bold">
               <Activity className="h-5 w-5" />
-              <h3 className="font-bold text-white text-base">Phase 3 System Architecture Status</h3>
+              <h3 className="font-bold text-white text-base">System Architecture Status</h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-              <div className="clay-card rounded-2xl p-4 space-y-2">
+              <div className="dark-card rounded-2xl p-4 space-y-2">
                 <div className="font-bold text-white flex items-center gap-2">
-                  <Layers className="h-4 w-4 text-teal-400" />
+                  <Layers className="h-4 w-4 text-blue-400" />
                   Full-Text Search (tsvector)
                 </div>
                 <p className="text-slate-400 leading-relaxed font-normal">
@@ -164,9 +164,9 @@ export const OperationsOverview: React.FC = () => {
                 </p>
               </div>
 
-              <div className="clay-card rounded-2xl p-4 space-y-2">
+              <div className="dark-card rounded-2xl p-4 space-y-2">
                 <div className="font-bold text-white flex items-center gap-2">
-                  <ShieldCheck className="h-4 w-4 text-teal-400" />
+                  <ShieldCheck className="h-4 w-4 text-blue-400" />
                   Approval State Machine
                 </div>
                 <p className="text-slate-400 leading-relaxed font-normal">
@@ -174,9 +174,9 @@ export const OperationsOverview: React.FC = () => {
                 </p>
               </div>
 
-              <div className="clay-card rounded-2xl p-4 space-y-2">
+              <div className="dark-card rounded-2xl p-4 space-y-2">
                 <div className="font-bold text-white flex items-center gap-2">
-                  <Cpu className="h-4 w-4 text-teal-400" />
+                  <Cpu className="h-4 w-4 text-blue-400" />
                   Task & Notifications
                 </div>
                 <p className="text-slate-400 leading-relaxed font-normal">

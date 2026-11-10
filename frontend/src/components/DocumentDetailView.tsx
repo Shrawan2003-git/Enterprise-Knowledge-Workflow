@@ -88,7 +88,7 @@ export const DocumentDetailView: React.FC<DocumentDetailViewProps> = ({ document
           {(doc.status === 'DRAFT' || doc.status === 'CHANGES_REQUESTED') && (
             <button
               onClick={() => setIsSubmitReviewOpen(true)}
-              className="clay-btn-teal inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-white transition-all"
+              className="btn-electric inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-white transition-all"
             >
               <Send className="h-4 w-4" />
               Submit for Review
@@ -96,7 +96,7 @@ export const DocumentDetailView: React.FC<DocumentDetailViewProps> = ({ document
           )}
           <button
             onClick={() => handleDownload()}
-            className="clay-btn-secondary inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-slate-200 hover:text-white transition-all"
+            className="pill-badge px-4 py-2 text-xs font-bold text-slate-200 hover:text-white transition-all"
           >
             <Download className="h-4 w-4" />
             Download Current (v{doc.currentVersion?.versionNumber || 1})
@@ -105,14 +105,14 @@ export const DocumentDetailView: React.FC<DocumentDetailViewProps> = ({ document
       </div>
 
       {/* Main Metadata Card */}
-      <div className="clay-card-elevated rounded-3xl p-8 space-y-6">
+      <div className="neon-radiant-card rounded-3xl p-8 space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="space-y-2">
             <div className="flex items-center gap-2.5">
-              <span className="clay-badge-emerald px-3 py-0.5 text-xs font-bold uppercase">
+              <span className="pill-badge text-emerald-300 border-emerald-500/40 bg-emerald-950/40 px-3 py-0.5 text-xs font-bold uppercase">
                 {doc.status}
               </span>
-              <span className="clay-badge-purple px-3 py-0.5 text-xs font-bold uppercase">
+              <span className="pill-badge-active px-3 py-0.5 text-xs font-bold uppercase">
                 {doc.classification}
               </span>
             </div>
