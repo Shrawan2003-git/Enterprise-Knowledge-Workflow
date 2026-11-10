@@ -21,7 +21,6 @@ import {
   RefreshCw,
   ExternalLink,
   ShieldAlert,
-  Info,
   MessageSquare,
   X
 } from 'lucide-react';
@@ -300,23 +299,23 @@ export const CopilotView: React.FC<CopilotViewProps> = ({
 
   return (
     <div className="flex-1 flex flex-col lg:flex-row h-[calc(100vh-140px)] overflow-hidden max-w-7xl mx-auto w-full gap-4">
-      {/* Sidebar: Conversation List */}
-      <aside className="w-full lg:w-72 flex flex-col bg-slate-900/80 border border-slate-800 rounded-2xl overflow-hidden shrink-0 shadow-lg">
-        <div className="p-4 border-b border-slate-800 flex items-center justify-between">
+      {/* Sidebar: Conversation List (Clay) */}
+      <aside className="w-full lg:w-72 flex flex-col clay-card p-4 overflow-hidden shrink-0 shadow-xl border border-slate-700/20">
+        <div className="pb-3 border-b border-slate-800/80 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <MessageSquare className="h-4 w-4 text-teal-400" />
-            <span className="text-sm font-bold text-white">Conversations</span>
+            <span className="text-xs font-bold text-white uppercase tracking-wider">Conversations</span>
           </div>
           <button
             onClick={handleStartNewChat}
-            className="flex items-center gap-1 text-xs bg-teal-500 text-slate-950 font-semibold px-2.5 py-1.5 rounded-lg hover:bg-teal-400 transition-colors shadow-sm"
+            className="clay-btn-teal flex items-center gap-1 text-xs text-white font-bold px-3 py-1.5 shadow-md"
           >
             <Plus className="h-3.5 w-3.5" />
             New Chat
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-2 flex flex-col gap-1">
+        <div className="flex-1 overflow-y-auto py-2 flex flex-col gap-1.5">
           {conversations.length === 0 ? (
             <div className="text-xs text-slate-500 italic p-4 text-center">
               No conversations yet. Start a new chat!
@@ -328,21 +327,21 @@ export const CopilotView: React.FC<CopilotViewProps> = ({
                 <div
                   key={c.id}
                   onClick={() => setActiveConvoId(c.id)}
-                  className={`group flex items-center justify-between p-2.5 rounded-xl text-left cursor-pointer transition-all ${
+                  className={`group flex items-center justify-between p-3 rounded-2xl text-left cursor-pointer transition-all ${
                     isSelected
-                      ? 'bg-slate-800 text-teal-300 border border-teal-500/30'
-                      : 'hover:bg-slate-800/50 text-slate-300'
+                      ? 'clay-card-elevated border-l-4 border-teal-400 text-teal-300'
+                      : 'clay-btn-secondary text-slate-300 hover:text-white'
                   }`}
                 >
                   <div className="flex flex-col min-w-0 pr-2">
-                    <span className="text-xs font-medium truncate">{c.title}</span>
-                    <span className="text-[10px] text-slate-500">
+                    <span className="text-xs font-bold truncate">{c.title}</span>
+                    <span className="text-[10px] text-slate-400 mt-0.5">
                       {c.messageCount} msg · {new Date(c.updatedAt).toLocaleDateString()}
                     </span>
                   </div>
                   <button
                     onClick={(e) => handleDeleteConversation(e, c.id)}
-                    className="opacity-0 group-hover:opacity-100 text-slate-500 hover:text-rose-400 p-1 rounded transition-opacity"
+                    className="opacity-0 group-hover:opacity-100 text-slate-400 hover:text-rose-400 p-1 rounded-lg transition-opacity"
                     title="Delete conversation"
                   >
                     <Trash2 className="h-3.5 w-3.5" />
@@ -353,33 +352,32 @@ export const CopilotView: React.FC<CopilotViewProps> = ({
           )}
         </div>
 
-        <div className="p-3 border-t border-slate-800/80 text-[10px] text-slate-400 flex items-center gap-1.5">
+        <div className="pt-3 border-t border-slate-800/80 text-[10px] text-slate-400 flex items-center gap-1.5 font-medium">
           <ShieldAlert className="h-3.5 w-3.5 text-teal-400 shrink-0" />
-          <span>Owner-isolated & server-audited</span>
+          <span>Zero-Trust ACL & Server-Audited</span>
         </div>
       </aside>
 
-      {/* Main Chat Thread Area */}
-      <section className="flex-1 flex flex-col bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden shadow-lg relative">
+      {/* Main Chat Thread Area (Clay) */}
+      <section className="flex-1 flex flex-col clay-card overflow-hidden shadow-2xl relative border border-slate-700/20">
         {/* Thread Header */}
-        <div className="p-4 border-b border-slate-800 flex items-center justify-between bg-slate-950/40">
+        <div className="p-4 border-b border-slate-800/80 flex items-center justify-between bg-slate-950/40">
           <div className="flex items-center gap-3">
-            <div className="h-8 w-8 rounded-lg bg-teal-500/10 border border-teal-500/30 text-teal-400 flex items-center justify-center">
-              <Sparkles className="h-4 w-4" />
+            <div className="h-9 w-9 rounded-xl clay-btn-teal text-white flex items-center justify-center shadow-md">
+              <Sparkles className="h-5 w-5" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-white truncate max-w-md">
-                {currentConversation?.title || 'KnowFlow AI Copilot'}
+              <h2 className="text-sm font-extrabold text-white truncate max-w-md">
+                {currentConversation?.title || 'Enterprise KnowFlow Copilot'}
               </h2>
-              <p className="text-[11px] text-slate-400">
-                Grounded in enterprise docs with citation-backed claims
+              <p className="text-[11px] text-slate-400 font-medium">
+                Grounded in enterprise docs with page-aware citation verification
               </p>
             </div>
           </div>
 
           <div className="text-[11px] text-slate-400 flex items-center gap-2">
-            <Info className="h-3.5 w-3.5 text-slate-500" />
-            <span className="hidden sm:inline">Answers grounded in retrieved docs</span>
+            <span className="clay-badge-cyan px-2.5 py-0.5 text-[10px] font-bold">1536d pgvector</span>
           </div>
         </div>
 
@@ -454,12 +452,12 @@ export const CopilotView: React.FC<CopilotViewProps> = ({
                     {!isUser && renderConfidenceBadge(m.confidence)}
                   </div>
 
-                  {/* Message Bubble */}
+                  {/* Message Bubble (Clay) */}
                   <div
-                    className={`p-4 rounded-2xl text-sm leading-relaxed ${
+                    className={`text-sm leading-relaxed ${
                       isUser
-                        ? 'bg-teal-600 text-white rounded-tr-sm'
-                        : 'bg-slate-950 border border-slate-800 text-slate-200 rounded-tl-sm'
+                        ? 'clay-pill-active py-3.5 px-5 text-white max-w-[85%] rounded-3xl rounded-br-none shadow-lg font-medium'
+                        : 'clay-card-elevated p-5 text-slate-200 max-w-[95%] space-y-3 rounded-3xl rounded-bl-none border border-slate-700/30 shadow-xl'
                     }`}
                   >
                     <div className="whitespace-pre-wrap">{m.content}</div>
@@ -467,27 +465,27 @@ export const CopilotView: React.FC<CopilotViewProps> = ({
                     {/* Citations List on Assistant message */}
                     {!isUser && m.citations && m.citations.length > 0 && (
                       <div className="mt-4 pt-3 border-t border-slate-800/80 flex flex-col gap-2">
-                        <span className="text-[11px] font-semibold text-slate-400 flex items-center gap-1.5">
-                          <BookOpen className="h-3 w-3 text-teal-400" />
-                          Sources:
+                        <span className="text-[11px] font-bold text-slate-400 flex items-center gap-1.5 uppercase tracking-wider">
+                          <BookOpen className="h-3.5 w-3.5 text-teal-400" />
+                          Verified Grounding Sources:
                         </span>
                         <div className="flex flex-wrap gap-2">
                           {m.citations.map((c) => (
                             <button
                               key={c.id}
                               onClick={() => handleCitationClick(c)}
-                              className="group flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-teal-500/40 text-xs transition-all"
+                              className="clay-badge-cyan group flex items-center gap-1.5 px-3 py-1 font-bold text-xs transition-transform hover:scale-105"
                             >
-                              <span className="font-mono font-bold text-teal-400 text-[10px]">
+                              <span className="font-mono text-teal-400 text-[11px]">
                                 {c.sourceId}
                               </span>
-                              <span className="text-slate-300 group-hover:text-white truncate max-w-[180px]">
+                              <span className="truncate max-w-[180px]">
                                 {c.documentTitle}
                               </span>
-                              <span className="text-slate-500 text-[10px]">
+                              <span className="text-slate-400 text-[10px]">
                                 (v{c.versionNumber}, {c.pageHint})
                               </span>
-                              <ExternalLink className="h-2.5 w-2.5 text-slate-500 group-hover:text-teal-400" />
+                              <ExternalLink className="h-3 w-3 text-teal-400" />
                             </button>
                           ))}
                         </div>
@@ -500,8 +498,8 @@ export const CopilotView: React.FC<CopilotViewProps> = ({
                     <div className="flex items-center gap-2 px-1 text-slate-500">
                       <button
                         onClick={() => handleQuickFeedback(m.id, 1)}
-                        className={`p-1 rounded hover:text-emerald-400 transition-colors ${
-                          m.feedback?.rating === 1 ? 'text-emerald-400' : ''
+                        className={`clay-btn-secondary p-1.5 rounded-lg hover:text-emerald-400 transition-colors ${
+                          m.feedback?.rating === 1 ? 'text-emerald-400' : 'text-slate-400'
                         }`}
                         title="Helpful & accurate"
                       >
@@ -509,8 +507,8 @@ export const CopilotView: React.FC<CopilotViewProps> = ({
                       </button>
                       <button
                         onClick={() => handleQuickFeedback(m.id, -1)}
-                        className={`p-1 rounded hover:text-rose-400 transition-colors ${
-                          m.feedback?.rating === -1 ? 'text-rose-400' : ''
+                        className={`clay-btn-secondary p-1.5 rounded-lg hover:text-rose-400 transition-colors ${
+                          m.feedback?.rating === -1 ? 'text-rose-400' : 'text-slate-400'
                         }`}
                         title="Report issue with answer"
                       >
@@ -529,7 +527,7 @@ export const CopilotView: React.FC<CopilotViewProps> = ({
           )}
 
           {sending && (
-            <div className="self-start flex items-center gap-2 p-4 rounded-2xl bg-slate-950 border border-slate-800 text-xs text-slate-400">
+            <div className="self-start flex items-center gap-2 p-4 rounded-2xl clay-card-elevated border border-slate-700/30 text-xs text-slate-300">
               <RefreshCw className="h-3.5 w-3.5 animate-spin text-teal-400" />
               <span>Retrieving authorized evidence and reasoning...</span>
             </div>
@@ -538,8 +536,8 @@ export const CopilotView: React.FC<CopilotViewProps> = ({
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Input Bar */}
-        <div className="p-4 border-t border-slate-800 bg-slate-950/60">
+        {/* Input Bar (Clay) */}
+        <div className="p-4 border-t border-slate-800/80 bg-slate-950/60">
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -552,14 +550,14 @@ export const CopilotView: React.FC<CopilotViewProps> = ({
               type="text"
               value={inputContent}
               onChange={(e) => setInputContent(e.target.value)}
-              placeholder="Type your question..."
+              placeholder="Type your question (grounded in authorized documents)..."
               disabled={sending}
-              className="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 disabled:opacity-50 transition-all"
+              className="clay-input flex-1 py-3.5 px-4 text-sm text-white placeholder-slate-500 focus:outline-none disabled:opacity-50"
             />
             <button
               type="submit"
               disabled={sending || !inputContent.trim()}
-              className="px-5 py-3 rounded-xl bg-teal-500 text-slate-950 font-semibold text-sm hover:bg-teal-400 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-md flex items-center gap-1.5 shrink-0"
+              className="clay-btn-teal px-5 py-3 text-sm font-bold text-white shadow-md disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1.5 shrink-0"
             >
               <Send className="h-4 w-4" />
               <span>Send</span>

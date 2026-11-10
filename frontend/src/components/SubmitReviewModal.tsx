@@ -48,30 +48,30 @@ export const SubmitReviewModal: React.FC<SubmitReviewModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-      <div className="w-full max-w-lg rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-2xl relative">
-        <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-md p-4 animate-in fade-in duration-200">
+      <div className="w-full max-w-lg clay-card-elevated rounded-3xl p-6 relative">
+        <div className="flex items-center justify-between pb-4 border-b border-slate-700/40">
           <div>
-            <h3 className="text-lg font-bold text-white">Submit Document for Review</h3>
+            <h3 className="text-lg font-black text-white">Submit Document for Review</h3>
             <p className="text-xs text-slate-400 mt-0.5 line-clamp-1">{documentTitle}</p>
           </div>
           <button
             onClick={onClose}
-            className="rounded-lg p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+            className="clay-btn-secondary rounded-xl p-2 text-slate-400 hover:text-white transition-colors"
           >
-            <X className="h-5 w-5" />
+            <X className="h-4 w-4" />
           </button>
         </div>
 
         {error && (
-          <div className="mt-4 flex items-center gap-2 rounded-xl border border-rose-500/20 bg-rose-500/10 p-3 text-xs text-rose-400">
+          <div className="mt-4 flex items-center gap-2 rounded-2xl clay-badge-rose p-3.5 text-xs font-bold">
             <AlertCircle className="h-4 w-4 shrink-0" />
             <span>{error}</span>
           </div>
         )}
 
         {success && (
-          <div className="mt-4 flex items-center gap-2 rounded-xl border border-teal-500/20 bg-teal-500/10 p-3 text-xs text-teal-400">
+          <div className="mt-4 flex items-center gap-2 rounded-2xl clay-badge-emerald p-3.5 text-xs font-bold">
             <CheckCircle2 className="h-4 w-4 shrink-0" />
             <span>Submitted successfully! State transitioned to IN_REVIEW.</span>
           </div>
@@ -79,7 +79,7 @@ export const SubmitReviewModal: React.FC<SubmitReviewModalProps> = ({
 
         <form onSubmit={handleSubmit} className="mt-4 space-y-4">
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300">
+            <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
               Assigned Approver User ID (UUID)
             </label>
             <input
@@ -88,26 +88,26 @@ export const SubmitReviewModal: React.FC<SubmitReviewModalProps> = ({
               placeholder="e.g. 00000000-0000-0000-0000-000000000001"
               value={approverId}
               onChange={(e) => setApproverId(e.target.value)}
-              className="mt-1.5 block w-full rounded-xl border border-slate-700 bg-slate-950 px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:border-teal-500 focus:outline-none font-mono"
+              className="mt-1.5 block w-full rounded-2xl clay-input px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none font-mono"
             />
-            <p className="text-[11px] text-slate-500 mt-1">
+            <p className="text-[11px] text-slate-400 mt-1 font-medium">
               Note: Central governance prohibits self-approval (the submitter cannot approve their own document).
             </p>
           </div>
 
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-700/40">
             <button
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="rounded-xl border border-slate-700 px-4 py-2 text-xs font-medium text-slate-300 hover:bg-slate-800 transition-colors"
+              className="clay-btn-secondary px-4 py-2 text-xs font-bold text-slate-300 hover:text-white transition-all"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading || success}
-              className="inline-flex items-center gap-2 rounded-xl bg-teal-600 px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-teal-500/20 hover:bg-teal-500 disabled:opacity-50 transition-all"
+              className="clay-btn-teal inline-flex items-center gap-2 px-5 py-2 text-xs font-bold text-white disabled:opacity-50 transition-all"
             >
               <Send className="h-3.5 w-3.5" />
               {loading ? 'Submitting...' : 'Submit for Approval'}

@@ -67,45 +67,48 @@ export const ApprovalsView: React.FC = () => {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'APPROVED':
-        return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30';
+        return 'clay-badge-emerald';
       case 'REJECTED':
-        return 'bg-rose-500/10 text-rose-400 border-rose-500/30';
+        return 'clay-badge-purple';
       case 'CHANGES_REQUESTED':
-        return 'bg-amber-500/10 text-amber-400 border-amber-500/30';
+        return 'clay-badge-amber';
       case 'PENDING':
       default:
-        return 'bg-indigo-500/10 text-indigo-400 border-indigo-500/30';
+        return 'clay-badge-cyan';
     }
   };
 
   return (
     <div className="space-y-6">
-      {/* Header and Filter Tabs */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      {/* Header and Filter Tabs (Clay) */}
+      <div className="clay-card p-6 md:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border border-slate-700/20">
         <div>
-          <h2 className="text-2xl font-bold text-white tracking-tight">Workflow Approvals</h2>
-          <p className="text-sm text-slate-400">
+          <div className="flex items-center gap-3">
+            <h2 className="text-2xl font-extrabold text-white tracking-tight">Workflow Approvals</h2>
+            <span className="clay-badge-cyan text-xs font-bold px-3 py-1">4-Eye Governance</span>
+          </div>
+          <p className="text-xs md:text-sm text-slate-400 mt-1">
             Governed state-machine reviews enforcing 4-eye separation of duties and append-only audit history.
           </p>
         </div>
 
-        <div className="flex items-center gap-1 bg-slate-900 p-1 rounded-xl border border-slate-800">
+        <div className="flex items-center gap-1.5 bg-slate-950/70 p-1.5 rounded-2xl border border-slate-800/80">
           <button
             onClick={() => setActiveTab('assigned')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
               activeTab === 'assigned'
-                ? 'bg-slate-800 text-teal-400 shadow'
-                : 'text-slate-400 hover:text-white'
+                ? 'clay-pill-active text-white shadow-md'
+                : 'clay-btn-secondary text-slate-400 hover:text-white'
             }`}
           >
             Assigned to Me
           </button>
           <button
             onClick={() => setActiveTab('submitted')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
               activeTab === 'submitted'
-                ? 'bg-slate-800 text-teal-400 shadow'
-                : 'text-slate-400 hover:text-white'
+                ? 'clay-pill-active text-white shadow-md'
+                : 'clay-btn-secondary text-slate-400 hover:text-white'
             }`}
           >
             Submitted by Me
@@ -135,23 +138,19 @@ export const ApprovalsView: React.FC = () => {
           {approvals.map((req) => (
             <div
               key={req.id}
-              className="rounded-xl border border-slate-800 bg-slate-900/60 p-6 backdrop-blur-sm space-y-4"
+              className="clay-card p-6 space-y-4 border border-slate-700/20"
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-lg bg-slate-800 flex items-center justify-center text-teal-400">
-                    <UserCheck className="h-5 w-5" />
+                  <div className="h-11 w-11 rounded-2xl clay-btn-teal flex items-center justify-center text-white shadow-md font-bold">
+                    <UserCheck className="h-6 w-6" />
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-mono text-slate-400">
                         Req ID: {req.id.substring(0, 8)}...
                       </span>
-                      <span
-                        className={`inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold ${getStatusBadge(
-                          req.status
-                        )}`}
-                      >
+                      <span className={`px-3 py-0.5 text-xs font-bold ${getStatusBadge(req.status)}`}>
                         {req.status}
                       </span>
                     </div>
@@ -172,7 +171,7 @@ export const ApprovalsView: React.FC = () => {
                         setComment('');
                         setActionError(null);
                       }}
-                      className="inline-flex items-center gap-1.5 rounded-lg bg-teal-600/90 hover:bg-teal-600 px-3 py-1.5 text-xs font-semibold text-white shadow transition-colors"
+                      className="clay-btn-teal px-4 py-2 text-xs font-bold text-white shadow-md flex items-center gap-1.5"
                     >
                       <CheckCircle2 className="h-3.5 w-3.5" />
                       Approve
@@ -183,7 +182,7 @@ export const ApprovalsView: React.FC = () => {
                         setComment('');
                         setActionError(null);
                       }}
-                      className="inline-flex items-center gap-1.5 rounded-lg bg-amber-600/90 hover:bg-amber-600 px-3 py-1.5 text-xs font-semibold text-white shadow transition-colors"
+                      className="clay-btn-secondary px-4 py-2 text-xs font-bold text-amber-300 hover:text-white flex items-center gap-1.5"
                     >
                       <AlertCircle className="h-3.5 w-3.5" />
                       Request Changes
@@ -194,7 +193,7 @@ export const ApprovalsView: React.FC = () => {
                         setComment('');
                         setActionError(null);
                       }}
-                      className="inline-flex items-center gap-1.5 rounded-lg bg-rose-600/90 hover:bg-rose-600 px-3 py-1.5 text-xs font-semibold text-white shadow transition-colors"
+                      className="clay-btn-secondary px-4 py-2 text-xs font-bold text-rose-400 hover:text-white flex items-center gap-1.5"
                     >
                       <XCircle className="h-3.5 w-3.5" />
                       Reject

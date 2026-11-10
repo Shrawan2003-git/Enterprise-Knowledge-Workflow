@@ -5,7 +5,7 @@ import { ingestionApi, ChunkCitationDto } from '../api/ingestionApi';
 import { SubmitReviewModal } from './SubmitReviewModal';
 import { 
   FileText, Clock, Plus, Search, X, Send, Sparkles, 
-  BookOpen, ChevronRight 
+  BookOpen, ChevronRight, RefreshCw
 } from 'lucide-react';
 
 interface LibraryViewProps {
@@ -80,32 +80,32 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
   const getClassificationBadge = (classification: string) => {
     switch (classification.toUpperCase()) {
       case 'PUBLIC':
-        return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30';
+        return 'clay-badge-emerald';
       case 'INTERNAL':
-        return 'bg-sky-500/10 text-sky-400 border-sky-500/30';
+        return 'clay-badge-cyan';
       case 'CONFIDENTIAL':
-        return 'bg-amber-500/10 text-amber-400 border-amber-500/30';
+        return 'clay-badge-amber';
       case 'RESTRICTED':
-        return 'bg-rose-500/10 text-rose-400 border-rose-500/30';
+        return 'clay-badge-purple';
       default:
-        return 'bg-slate-500/10 text-slate-400 border-slate-500/30';
+        return 'clay-btn-secondary text-slate-300';
     }
   };
 
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'APPROVED':
-        return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30';
+        return 'clay-badge-emerald';
       case 'IN_REVIEW':
-        return 'bg-amber-500/10 text-amber-400 border-amber-500/30';
+        return 'clay-badge-amber';
       case 'CHANGES_REQUESTED':
-        return 'bg-orange-500/10 text-orange-400 border-orange-500/30';
+        return 'clay-badge-amber';
       case 'REJECTED':
-        return 'bg-rose-500/10 text-rose-400 border-rose-500/30';
+        return 'clay-badge-purple';
       case 'ARCHIVED':
-        return 'bg-slate-700/30 text-slate-400 border-slate-700';
+        return 'clay-btn-secondary text-slate-400';
       default:
-        return 'bg-slate-800 text-slate-300 border-slate-700';
+        return 'clay-btn-secondary text-slate-300';
     }
   };
 
@@ -114,79 +114,92 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      {/* Header Banner (Clay) */}
+      <div className="clay-card p-6 md:p-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5 border border-slate-700/20">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-            Governed Document Library
-          </h2>
-          <p className="text-sm text-slate-400 mt-0.5">
+          <div className="flex items-center gap-3">
+            <h2 className="text-2xl font-extrabold tracking-tight text-white">
+              Governed Document Library
+            </h2>
+            <span className="clay-badge-cyan text-xs font-bold px-3 py-1">Zero-Trust ACL Active</span>
+          </div>
+          <p className="text-xs md:text-sm text-slate-400 mt-1">
             Full-text indexed documents with strict access governance, page-aware chunk citations, and immutable versions.
           </p>
         </div>
 
-        {canUpload && (
-          <button
-            onClick={onOpenUpload}
-            className="inline-flex items-center gap-2 rounded-xl bg-teal-500 hover:bg-teal-400 px-4 py-2 text-sm font-semibold text-slate-950 transition-colors shadow-lg shadow-teal-500/20"
-          >
-            <Plus className="h-4 w-4" />
-            Upload Document
-          </button>
-        )}
+        <div className="flex items-center gap-2.5">
+          {onRefreshDocs && (
+            <button
+              onClick={onRefreshDocs}
+              className="clay-btn-secondary px-3.5 py-2.5 text-xs font-bold text-slate-300 hover:text-white flex items-center gap-1.5"
+              title="Refresh Library"
+            >
+              <RefreshCw className="h-3.5 w-3.5" />
+              <span>Refresh</span>
+            </button>
+          )}
+          {canUpload && (
+            <button
+              onClick={onOpenUpload}
+              className="clay-btn-teal px-4 py-2.5 text-xs font-bold text-white shadow-lg flex items-center gap-2"
+            >
+              <Plus className="h-4 w-4" />
+              <span>Upload Document</span>
+            </button>
+          )}
+        </div>
       </div>
 
-      {/* Mode Toggle & Search Bar */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-3">
-          <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Search Scope:</span>
-          <div className="inline-flex rounded-xl bg-slate-900 border border-slate-800 p-1">
-            <button
-              onClick={() => {
-                setSearchMode('DOCUMENTS');
-                setChunkResults(null);
-              }}
-              className={`px-3 py-1 text-xs font-semibold rounded-lg transition ${
-                searchMode === 'DOCUMENTS'
-                  ? 'bg-teal-500 text-slate-950 shadow-sm'
-                  : 'text-slate-400 hover:text-white'
-              }`}
-            >
-              Document Level
-            </button>
-            <button
-              onClick={() => {
-                setSearchMode('CHUNKS');
-                setSearchResults(null);
-              }}
-              className={`px-3 py-1 text-xs font-semibold rounded-lg transition flex items-center gap-1.5 ${
-                searchMode === 'CHUNKS'
-                  ? 'bg-teal-500 text-slate-950 shadow-sm'
-                  : 'text-slate-400 hover:text-white'
-              }`}
-            >
-              <BookOpen className="w-3.5 h-3.5" />
-              Page-Aware Chunks & Citations
-            </button>
-          </div>
+      {/* 3D Clay Search Bar & Scope Filters */}
+      <div className="clay-card-elevated p-5 space-y-4 border border-slate-700/20">
+        <div className="flex items-center gap-2.5 text-xs">
+          <span className="font-bold text-slate-400 uppercase tracking-wider mr-1">Search Scope:</span>
+          <button
+            onClick={() => {
+              setSearchMode('DOCUMENTS');
+              setChunkResults(null);
+            }}
+            className={`px-4 py-1.5 text-xs font-bold rounded-xl transition ${
+              searchMode === 'DOCUMENTS'
+                ? 'clay-pill-active text-white shadow-md'
+                : 'clay-btn-secondary text-slate-400 hover:text-white'
+            }`}
+          >
+            Document Level
+          </button>
+          <button
+            onClick={() => {
+              setSearchMode('CHUNKS');
+              setSearchResults(null);
+            }}
+            className={`px-4 py-1.5 text-xs font-bold rounded-xl transition flex items-center gap-1.5 ${
+              searchMode === 'CHUNKS'
+                ? 'clay-pill-active text-white shadow-md'
+                : 'clay-btn-secondary text-slate-400 hover:text-white'
+            }`}
+          >
+            <BookOpen className="w-3.5 h-3.5" />
+            Page-Aware Chunks & Citations
+          </button>
         </div>
 
         <form
           onSubmit={handleSearch}
-          className="rounded-2xl border border-slate-800 bg-slate-900/60 p-3.5 backdrop-blur-sm flex flex-col md:flex-row gap-3 items-stretch md:items-center"
+          className="flex flex-col md:flex-row gap-3 items-stretch md:items-center"
         >
           <div className="relative flex-1">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <input
               type="text"
               placeholder={
                 searchMode === 'CHUNKS'
-                  ? 'Search paragraph text across extracted pages with citations (e.g. "security compliance", "SLA policy")...'
+                  ? 'Search paragraph text across extracted pages with citations (e.g. "security compliance", "indemnification")...'
                   : 'Search documents by title, description, or keyword (PostgreSQL tsvector FTS)...'
               }
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-xl border border-slate-800 bg-slate-950/80 pl-10 pr-4 py-2 text-sm text-slate-100 placeholder-slate-500 focus:border-teal-500 focus:outline-none"
+              className="clay-input w-full py-3 pl-11 pr-4 text-sm text-white placeholder-slate-500 focus:outline-none"
             />
           </div>
 
@@ -196,26 +209,26 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
                 <select
                   value={selectedClassification}
                   onChange={(e) => setSelectedClassification(e.target.value)}
-                  className="rounded-xl border border-slate-800 bg-slate-950 px-3 py-2 text-xs text-slate-300 focus:border-teal-500 focus:outline-none"
+                  className="clay-btn-secondary px-3 py-2.5 text-xs font-bold text-white focus:outline-none cursor-pointer bg-[#1c294a]"
                 >
-                  <option value="">All Classifications</option>
-                  <option value="PUBLIC">Public</option>
-                  <option value="INTERNAL">Internal</option>
-                  <option value="CONFIDENTIAL">Confidential</option>
-                  <option value="RESTRICTED">Restricted</option>
+                  <option value="" className="bg-slate-900">All Classifications</option>
+                  <option value="PUBLIC" className="bg-slate-900">Public</option>
+                  <option value="INTERNAL" className="bg-slate-900">Internal</option>
+                  <option value="CONFIDENTIAL" className="bg-slate-900">Confidential</option>
+                  <option value="RESTRICTED" className="bg-slate-900">Restricted</option>
                 </select>
 
                 <select
                   value={selectedStatus}
                   onChange={(e) => setSelectedStatus(e.target.value)}
-                  className="rounded-xl border border-slate-800 bg-slate-950 px-3 py-2 text-xs text-slate-300 focus:border-teal-500 focus:outline-none"
+                  className="clay-btn-secondary px-3 py-2.5 text-xs font-bold text-white focus:outline-none cursor-pointer bg-[#1c294a]"
                 >
-                  <option value="">All Statuses</option>
-                  <option value="DRAFT">Draft</option>
-                  <option value="IN_REVIEW">In Review</option>
-                  <option value="APPROVED">Approved</option>
-                  <option value="CHANGES_REQUESTED">Changes Requested</option>
-                  <option value="REJECTED">Rejected</option>
+                  <option value="" className="bg-slate-900">All Statuses</option>
+                  <option value="DRAFT" className="bg-slate-900">Draft</option>
+                  <option value="IN_REVIEW" className="bg-slate-900">In Review</option>
+                  <option value="APPROVED" className="bg-slate-900">Approved</option>
+                  <option value="CHANGES_REQUESTED" className="bg-slate-900">Changes Requested</option>
+                  <option value="REJECTED" className="bg-slate-900">Rejected</option>
                 </select>
               </>
             )}
@@ -223,7 +236,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
             <button
               type="submit"
               disabled={searching}
-              className="rounded-xl bg-teal-600 px-4 py-2 text-xs font-semibold text-white shadow-md hover:bg-teal-500 transition-colors"
+              className="clay-btn-teal px-5 py-2.5 text-xs font-bold text-white shadow-md disabled:opacity-50"
             >
               {searching ? 'Searching...' : 'Search'}
             </button>
@@ -232,7 +245,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
               <button
                 type="button"
                 onClick={handleClearFilters}
-                className="p-2 rounded-xl border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+                className="clay-btn-secondary p-2.5 text-slate-400 hover:text-white"
                 title="Clear filters"
               >
                 <X className="h-4 w-4" />
@@ -245,7 +258,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
       {/* Search status header */}
       {isSearchActive && (
         <div className="flex items-center justify-between text-xs text-slate-400 px-1">
-          <span className="flex items-center gap-1.5 text-teal-400 font-medium">
+          <span className="flex items-center gap-1.5 text-teal-400 font-bold">
             <Sparkles className="h-3.5 w-3.5" />
             {searchMode === 'CHUNKS'
               ? `Found ${chunkResults?.length || 0} matching citation chunk${chunkResults?.length === 1 ? '' : 's'}`
@@ -253,7 +266,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
           </span>
           <button
             onClick={handleClearFilters}
-            className="hover:underline text-slate-400"
+            className="hover:underline text-slate-400 font-semibold"
           >
             Reset search
           </button>
@@ -264,9 +277,9 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
       {searchMode === 'CHUNKS' && chunkResults !== null && (
         <div className="space-y-4">
           {chunkResults.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-slate-800 bg-slate-900/30 p-12 text-center">
-              <BookOpen className="mx-auto h-12 w-12 text-slate-600" />
-              <h3 className="mt-4 text-base font-semibold text-white">No matching citation chunks</h3>
+            <div className="clay-card p-12 text-center border border-dashed border-slate-700/50">
+              <BookOpen className="mx-auto h-12 w-12 text-slate-500" />
+              <h3 className="mt-4 text-base font-bold text-white">No matching citation chunks</h3>
               <p className="mt-1 text-sm text-slate-400">
                 Try querying specific policy terminology or ensuring target documents are in APPROVED and READY status.
               </p>
@@ -276,26 +289,26 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
               <div
                 key={chunk.chunkId}
                 onClick={() => onSelectDoc(chunk.documentId)}
-                className="group rounded-xl border border-slate-800 bg-slate-900/60 p-5 backdrop-blur-sm hover:border-teal-500/50 hover:bg-slate-900/90 transition cursor-pointer space-y-3"
+                className="clay-card-elevated p-5 space-y-3 hover:scale-[1.01] transition-transform cursor-pointer border border-slate-700/20"
               >
                 <div className="flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2">
-                    <span className="font-semibold text-teal-400">{chunk.documentTitle}</span>
+                    <span className="font-bold text-teal-400">{chunk.documentTitle}</span>
                     <span className="font-mono text-slate-500">v{chunk.versionNumber}</span>
                   </div>
-                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 font-mono text-[11px] border border-slate-700">
-                    <BookOpen className="w-3 h-3 text-teal-400" />
+                  <span className="clay-badge-cyan inline-flex items-center gap-1 px-3 py-1 font-mono text-xs font-bold">
+                    <BookOpen className="w-3.5 h-3.5" />
                     Page {chunk.pageStart === chunk.pageEnd ? chunk.pageStart : `${chunk.pageStart}–${chunk.pageEnd}`}
                   </span>
                 </div>
 
-                <div className="text-xs text-slate-300 font-serif leading-relaxed bg-slate-950/70 p-3 rounded-lg border border-slate-800/80">
+                <div className="text-xs text-slate-300 font-serif leading-relaxed clay-input p-3 border-l-4 border-teal-400">
                   "...{chunk.snippet}..."
                 </div>
 
-                <div className="flex items-center justify-between text-[11px] text-slate-500">
-                  <span>Relevance score: {chunk.relevanceScore.toFixed(1)}</span>
-                  <span className="inline-flex items-center gap-1 text-teal-400 group-hover:translate-x-0.5 transition-transform">
+                <div className="flex items-center justify-between text-[11px] text-slate-400">
+                  <span>Relevance score: <strong className="text-teal-400">{chunk.relevanceScore.toFixed(1)}</strong></span>
+                  <span className="inline-flex items-center gap-1 text-teal-400 font-bold hover:translate-x-0.5 transition-transform">
                     View in document <ChevronRight className="w-3 h-3" />
                   </span>
                 </div>
@@ -310,17 +323,17 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
         loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="h-48 rounded-xl border border-slate-800 bg-slate-900/50 p-6 animate-pulse space-y-4">
-                <div className="h-6 w-3/4 rounded bg-slate-800"></div>
-                <div className="h-4 w-full rounded bg-slate-800/60"></div>
-                <div className="h-4 w-1/2 rounded bg-slate-800/60"></div>
+              <div key={i} className="clay-card h-48 p-6 animate-pulse space-y-4">
+                <div className="h-6 w-3/4 rounded-xl bg-slate-800"></div>
+                <div className="h-4 w-full rounded-xl bg-slate-800/60"></div>
+                <div className="h-4 w-1/2 rounded-xl bg-slate-800/60"></div>
               </div>
             ))}
           </div>
         ) : displayItems.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-slate-800 bg-slate-900/30 p-12 text-center">
-            <FileText className="mx-auto h-12 w-12 text-slate-600" />
-            <h3 className="mt-4 text-base font-semibold text-white">
+          <div className="clay-card p-12 text-center border border-dashed border-slate-700/50">
+            <FileText className="mx-auto h-12 w-12 text-slate-500" />
+            <h3 className="mt-4 text-base font-bold text-white">
               {isSearchActive ? 'No matching documents found' : 'No documents accessible'}
             </h3>
             <p className="mt-1 text-sm text-slate-400">
@@ -337,33 +350,25 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
               return (
                 <div
                   key={doc.id}
-                  className="group relative rounded-xl border border-slate-800 bg-slate-900/60 p-6 backdrop-blur-sm transition-all hover:border-slate-700 hover:shadow-xl hover:shadow-slate-900/50 flex flex-col justify-between"
+                  className="clay-card p-6 space-y-4 border border-slate-700/20 hover:scale-[1.01] transition-transform flex flex-col justify-between"
                 >
                   <div className="space-y-3 cursor-pointer" onClick={() => onSelectDoc(doc.id)}>
                     <div className="flex items-center justify-between gap-2">
-                      <span
-                        className={`inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold ${getClassificationBadge(
-                          doc.classification
-                        )}`}
-                      >
+                      <span className={`px-3 py-1 text-xs font-bold ${getClassificationBadge(doc.classification)}`}>
                         {doc.classification}
                       </span>
-                      <span
-                        className={`inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium ${getStatusBadge(
-                          doc.status
-                        )}`}
-                      >
+                      <span className={`px-3 py-1 text-xs font-bold ${getStatusBadge(doc.status)}`}>
                         {doc.status}
                       </span>
                     </div>
 
-                    <h3 className="text-lg font-semibold text-white group-hover:text-teal-400 transition-colors line-clamp-1">
+                    <h3 className="text-base font-bold text-white group-hover:text-teal-400 transition-colors line-clamp-1 mt-2">
                       {doc.title}
                     </h3>
 
                     {hasSnippet ? (
                       <div
-                        className="text-xs text-slate-300 bg-slate-950/60 p-2.5 rounded-lg border border-slate-800/80 font-serif leading-relaxed"
+                        className="text-xs text-slate-300 clay-input p-3 font-serif leading-relaxed"
                         dangerouslySetInnerHTML={{ __html: doc.snippet }}
                       />
                     ) : (
@@ -373,9 +378,9 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
                     )}
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500">
-                    <span className="flex items-center gap-1 font-mono text-slate-400">
-                      v{doc.currentVersionNumber || 1}
+                  <div className="mt-4 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+                    <span className="flex items-center gap-1 font-mono text-teal-400 font-bold">
+                      v{doc.currentVersionNumber || 1}.0
                     </span>
 
                     <div className="flex items-center gap-2">
@@ -385,7 +390,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
                             e.stopPropagation();
                             setReviewModalDoc({ id: doc.id, title: doc.title });
                           }}
-                          className="inline-flex items-center gap-1 text-[11px] font-semibold text-teal-400 hover:text-teal-300 bg-teal-500/10 px-2 py-1 rounded-md border border-teal-500/20 transition-colors"
+                          className="clay-btn-secondary px-3 py-1.5 text-xs font-bold text-teal-300 hover:text-white flex items-center gap-1"
                         >
                           <Send className="h-3 w-3" />
                           <span>Submit Review</span>
